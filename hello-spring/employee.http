@@ -14,3 +14,12 @@ GET http://localhost:8080/api/employees/1
 
 ### Alkalmazott lekérése azonosító alapján - not found
 GET http://localhost:8080/api/employees/666
+
+### Alkalmazott módosítása
+PUT http://localhost:8080/api/employees/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "John Doe"
+}

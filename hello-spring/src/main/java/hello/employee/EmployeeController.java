@@ -37,4 +37,13 @@ public class EmployeeController {
     public EmployeeResourceDto findById(@PathVariable long id) {
         return employeeService.findById(id);
     }
+
+    @PutMapping("/{id}")
+    public EmployeeResourceDto update(@PathVariable long id,
+                                      @RequestBody EmployeeResourceDto employeeResourceDto) {
+        if (id != employeeResourceDto.getId()) {
+            throw new IllegalArgumentException("Different ids");
+        }
+        return employeeService.update(employeeResourceDto);
+    }
 }
