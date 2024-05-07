@@ -11,11 +11,16 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    public void save(Employee employee) {
-        employeeRepository.save(employee);
+    public void save(EmployeeResourceDto employee) {
+        var entity = new Employee(employee.getName());
+        employeeRepository.save(entity);
     }
 
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeResourceDto> findAll() {
+        return employeeRepository
+                .findAll()
+                .stream()
+                .map(entity -> new EmployeeResourceDto(entity.getId(), entity.getName()))
+                .toList();
     }
 }

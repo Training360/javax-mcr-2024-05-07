@@ -8,6 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -17,17 +18,18 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Employee> save(@RequestBody Employee employee,
+    public ResponseEntity<EmployeeResourceDto> save(@RequestBody EmployeeResourceDto employee,
                                          UriComponentsBuilder builder) {
         employeeService.save(employee);
 
         return ResponseEntity
                 .created(builder.path("/api/employees/{id}").buildAndExpand(employee.getId()).toUri())
+                .header("Response-Id", UUID.randomUUID().toString())
                 .body(employee);
     }
 
     @GetMapping
-    public List<Employee> findAll() {
+    public List<EmployeeResourceDto> findAll() {
         return employeeService.findAll();
     }
 }
