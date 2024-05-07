@@ -24,4 +24,12 @@ public class EmployeeService {
                 .map(entity -> new EmployeeResourceDto(entity.getId(), entity.getName()))
                 .toList();
     }
+
+    public EmployeeResourceDto findById(long id) {
+        return employeeRepository
+                .findById(id)
+                .map(entity -> new EmployeeResourceDto(entity.getId(), entity.getName()))
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Employee not found with id %d".formatted(id)));
+    }
 }
