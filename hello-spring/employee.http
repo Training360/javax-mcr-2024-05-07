@@ -1,0 +1,10 @@
+### Lekéri az alkalmazottakat
+GET http://localhost:8080/api/employees
+
+### Elment egy alkalmazottat
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+  "name": "Jack Doe"
+}
