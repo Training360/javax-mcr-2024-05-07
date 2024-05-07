@@ -32,4 +32,9 @@ public class EmployeeController {
     public List<EmployeeResourceDto> findAll() {
         return employeeService.findAll();
     }
+
+    @GetMapping("/{id}")
+    public EmployeeResourceDto findById(@PathVariable long id) {
+        return employeeService.findById(id);
+    }
 }

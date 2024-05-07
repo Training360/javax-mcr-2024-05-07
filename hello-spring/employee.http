@@ -8,3 +8,9 @@ Content-Type: application/json
 {
   "name": "Jack Doe"
 }
+
+### Alkalmazott lekérése azonosító alapján
+GET http://localhost:8080/api/employees/1
+
+### Alkalmazott lekérése azonosító alapján - not found
+GET http://localhost:8080/api/employees/666
