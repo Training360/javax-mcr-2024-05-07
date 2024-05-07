@@ -11,9 +11,10 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    public void save(EmployeeResourceDto employee) {
+    public EmployeeResourceDto save(EmployeeResourceDto employee) {
         var entity = new Employee(employee.getName());
         employeeRepository.save(entity);
+        return new EmployeeResourceDto(entity.getId(), entity.getName());
     }
 
     public List<EmployeeResourceDto> findAll() {

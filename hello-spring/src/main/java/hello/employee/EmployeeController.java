@@ -20,12 +20,12 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeResourceDto> save(@RequestBody EmployeeResourceDto employee,
                                          UriComponentsBuilder builder) {
-        employeeService.save(employee);
+        var result = employeeService.save(employee);
 
         return ResponseEntity
                 .created(builder.path("/api/employees/{id}").buildAndExpand(employee.getId()).toUri())
                 .header("Response-Id", UUID.randomUUID().toString())
-                .body(employee);
+                .body(result);
     }
 
     @GetMapping
