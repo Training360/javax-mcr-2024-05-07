@@ -32,4 +32,14 @@ public class EmployeeService {
                 .orElseThrow(
                         () -> new IllegalArgumentException("Employee not found with id %d".formatted(id)));
     }
+
+    public EmployeeResourceDto update(EmployeeResourceDto employeeResourceDto) {
+        var employee = employeeRepository.findById(employeeResourceDto.getId())
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Employee not found with id %d".formatted(employeeResourceDto.getId())));
+        employee.setName(employeeResourceDto.getName());
+        employeeRepository
+                .save(employee);
+        return new EmployeeResourceDto(employee.getId(), employee.getName());
+    }
 }

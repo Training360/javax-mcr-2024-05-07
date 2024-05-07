@@ -17,9 +17,23 @@ public class EmployeeRepository {
 
     private AtomicLong i = new AtomicLong();
 
-    public void save(Employee employee) {
-        employees.add(employee);
-        employee.setId(i.incrementAndGet());
+    public Employee save(Employee employee) {
+        if (employee.getId() == null) {
+            employees.add(employee);
+            employee.setId(i.incrementAndGet());
+            return employee;
+        }
+        else {
+            // Update
+            var found = findById(employee.getId());
+            if (found.isPresent()) {
+                found.get().setName(employee.getName());
+                return found.get();
+            }
+            else {
+                return null;
+            }
+        }
     }
 
     public List<Employee> findAll() {
