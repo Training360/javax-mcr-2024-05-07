@@ -46,4 +46,10 @@ public class EmployeeController {
         }
         return employeeService.update(employeeResourceDto);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable long id) {
+        employeeService.deleteById(id);
+    }
 }

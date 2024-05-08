@@ -2,10 +2,7 @@ package hello.employee;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
@@ -44,5 +41,9 @@ public class EmployeeRepository {
         return employees.stream()
                 .filter(employee -> employee.getId()==id)
                 .findAny();
+    }
+
+    public void deleteById(long id) {
+        employees.removeIf(employee -> employee.getId() == id);
     }
 }

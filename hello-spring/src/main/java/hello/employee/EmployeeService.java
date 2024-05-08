@@ -42,4 +42,8 @@ public class EmployeeService {
                 .save(employee);
         return new EmployeeResourceDto(employee.getId(), employee.getName());
     }
+
+    public void deleteById(long id) {
+        employeeRepository.deleteById(id);
+    }
 }
