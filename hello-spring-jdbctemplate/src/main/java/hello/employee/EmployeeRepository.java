@@ -1,23 +1,38 @@
 package hello.employee;
 
+import lombok.AllArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Statement;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
+@AllArgsConstructor
 public class EmployeeRepository {
 
+    private JdbcTemplate jdbcTemplate;
+
     // Így lesz szálbiztos
-    private List<Employee> employees =
+    private final List<Employee> employees =
             Collections.synchronizedList(new ArrayList<>());
 
-    private AtomicLong i = new AtomicLong();
+    private final AtomicLong i = new AtomicLong();
 
     public Employee save(Employee employee) {
+        var sql = "insert into employees(emp_name) values (?)";
+
+        var keyHolder = new GeneratedKeyHolder();
         if (employee.getId() == null) {
-            employees.add(employee);
-            employee.setId(i.incrementAndGet());
+            jdbcTemplate.update(c -> {
+                var ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                        ps.setString(1, employee.getName());
+                        return ps;
+                    }
+                    , keyHolder);
+            employee.setId((Long) keyHolder.getKeys().get("id"));
             return employee;
         }
         else {
