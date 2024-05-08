@@ -10,19 +10,19 @@ Content-Type: application/json
 }
 
 ### Alkalmazott lekérése azonosító alapján
-GET http://localhost:8080/api/employees/1
+GET http://localhost:8080/api/employees/27
 
 ### Alkalmazott lekérése azonosító alapján - not found
 GET http://localhost:8080/api/employees/666
 
 ### Alkalmazott módosítása
-PUT http://localhost:8080/api/employees/1
+PUT http://localhost:8080/api/employees/27
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "John Doe"
+  "id": 27,
+  "name": "John DoeXXX"
 }
 
 ### Törli az alkalmazottat
-DELETE http://localhost:8080/api/employees/1
+DELETE http://localhost:8080/api/employees/27
