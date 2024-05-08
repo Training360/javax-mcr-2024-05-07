@@ -1,0 +1,28 @@
+### Lekéri az alkalmazottakat
+GET http://localhost:8080/api/employees
+
+### Elment egy alkalmazottat
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+  "name": "Jack Doe"
+}
+
+### Alkalmazott lekérése azonosító alapján
+GET http://localhost:8080/api/employees/1
+
+### Alkalmazott lekérése azonosító alapján - not found
+GET http://localhost:8080/api/employees/666
+
+### Alkalmazott módosítása
+PUT http://localhost:8080/api/employees/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "John Doe"
+}
+
+### Törli az alkalmazottat
+DELETE http://localhost:8080/api/employees/1
