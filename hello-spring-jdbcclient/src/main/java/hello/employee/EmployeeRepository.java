@@ -21,24 +21,21 @@ public class EmployeeRepository {
     private JdbcClient jdbcClient;
 
     public Employee save(Employee employee) {
-
-
-
         if (employee.getId() == null) {
             var keyHolder = new GeneratedKeyHolder();
-            var sql = "insert into employees(emp_name) values (?)";
-            jdbcClient.sql(sql).update(keyHolder, "id");
+            var sql = "insert into employees(emp_name) values (:name)";
+            jdbcClient.sql(sql).param("name", employee.getName()).update(keyHolder, "id");
             employee.setId((Long) keyHolder.getKeys().get("id"));
             return employee;
         }
         else {
             var sql = """
                     update 
-                    employees set emp_name = ? 
-                    where id = ?""";
+                    employees set emp_name = :name 
+                    where id = :id""";
 
             // Update
-            jdbcClient.sql(sql).update();
+            jdbcClient.sql(sql).param("name", employee.getName()).param("id", employee.getId()).update();
             return employee;
         }
     }
@@ -51,7 +48,7 @@ public class EmployeeRepository {
 
     public Optional<Employee> findById(long id) {
         try {
-            return Optional.of(jdbcClient.sql("select id, emp_name from employees where id = ?id")
+            return Optional.of(jdbcClient.sql("select id, emp_name from employees where id = :id")
                     .param("id", id).query(
                             (rs, row) -> new Employee(rs.getLong("id"), rs.getString("emp_name")
                     )).single());
@@ -61,6 +58,6 @@ public class EmployeeRepository {
     }
 
     public void deleteById(long id) {
-        jdbcClient.sql("delete from employee where id = ?id").param(id).update();
+        jdbcClient.sql("delete from employees where id = :id").param("id", id).update();
     }
 }
