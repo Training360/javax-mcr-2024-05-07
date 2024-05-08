@@ -1,10 +1,15 @@
 package hello.employee;
 
 import lombok.AllArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -14,12 +19,6 @@ import java.util.concurrent.atomic.AtomicLong;
 public class EmployeeRepository {
 
     private JdbcTemplate jdbcTemplate;
-
-    // Így lesz szálbiztos
-    private final List<Employee> employees =
-            Collections.synchronizedList(new ArrayList<>());
-
-    private final AtomicLong i = new AtomicLong();
 
     public Employee save(Employee employee) {
         var sql = "insert into employees(emp_name) values (?)";
@@ -37,28 +36,29 @@ public class EmployeeRepository {
         }
         else {
             // Update
-            var found = findById(employee.getId());
-            if (found.isPresent()) {
-                found.get().setName(employee.getName());
-                return found.get();
-            }
-            else {
-                return null;
-            }
+            jdbcTemplate.update("update employees set emp_name = ? where id = ?",employee.getName(), employee.getId());
+            return employee;
         }
     }
 
     public List<Employee> findAll() {
-        return employees;
+        return jdbcTemplate.query("select id, emp_name from employees",
+                (rs, row) -> new Employee(rs.getLong("id"), rs.getString("emp_name"))
+        );
     }
 
     public Optional<Employee> findById(long id) {
-        return employees.stream()
-                .filter(employee -> employee.getId()==id)
-                .findAny();
+        try {
+            return Optional.of(jdbcTemplate.queryForObject("select id, emp_name from employees where id = ?",
+                    (rs, row) -> new Employee(rs.getLong("id"), rs.getString("emp_name")),
+                    id
+            ));
+        }catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public void deleteById(long id) {
-        employees.removeIf(employee -> employee.getId() == id);
+        jdbcTemplate.update("delete from employees where id = ?", id);
     }
 }
