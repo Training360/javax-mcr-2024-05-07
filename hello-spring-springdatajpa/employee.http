@@ -6,23 +6,31 @@ POST http://localhost:8080/api/employees
 Content-Type: application/json
 
 {
-  "name": "Jack Doe"
+  "name": "Jack Doe",
+  "addresses": [
+    {
+      "city": "Budapest"
+    },
+    {
+      "city": "Baja"
+    }
+  ]
 }
 
 ### Alkalmazott lekérése azonosító alapján
-GET http://localhost:8080/api/employees/27
+GET http://localhost:8080/api/employees/28
 
 ### Alkalmazott lekérése azonosító alapján - not found
 GET http://localhost:8080/api/employees/666
 
 ### Alkalmazott módosítása
-PUT http://localhost:8080/api/employees/27
+PUT http://localhost:8080/api/employees/28
 Content-Type: application/json
 
 {
-  "id": 27,
+  "id": 28,
   "name": "John DoeXXX"
 }
 
 ### Törli az alkalmazottat
-DELETE http://localhost:8080/api/employees/27
+DELETE http://localhost:8080/api/employees/28
