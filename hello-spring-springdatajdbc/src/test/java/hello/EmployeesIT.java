@@ -35,6 +35,7 @@ class EmployeesIT {
                 .get()
                 .uri("/api/employees")
                 .exchange()
+                .expectStatus().isOk()
                 .expectBodyList(EmployeeResourceDto.class).hasSize(1);
 
     }
