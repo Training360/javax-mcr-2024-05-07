@@ -29,8 +29,13 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<EmployeeResourceDto> findAll() {
-        return employeeService.findAll();
+    public List<EmployeeResourceDto> findAll(@RequestParam(required = false) String filter) {
+        if (filter == null) {
+            return employeeService.findAll();
+        }
+        else {
+            return employeeService.findByName(filter);
+        }
     }
 
     @GetMapping("/{id}")

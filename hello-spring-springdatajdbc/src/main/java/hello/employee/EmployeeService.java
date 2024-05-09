@@ -46,4 +46,12 @@ public class EmployeeService {
     public void deleteById(long id) {
         employeeRepository.deleteById(id);
     }
+
+    public List<EmployeeResourceDto> findByName(String filter) {
+        return employeeRepository
+                .findByNameLike(filter + "%")
+                .stream()
+                .map(entity -> new EmployeeResourceDto(entity.getId(), entity.getName(), entity.getSalary()))
+                .toList();
+    }
 }
