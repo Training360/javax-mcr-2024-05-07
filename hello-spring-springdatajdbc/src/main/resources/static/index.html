@@ -5,6 +5,9 @@
     <title>Employees</title>
     <link href="webjars/bootstrap/css/bootstrap.css" rel="stylesheet">
     <script src="js/employees.js"></script>
+<!--    <script src="webjars/chart.js/dist/chart.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body class="container">
 
@@ -18,6 +21,10 @@
         <input id="name-input" />
         <button type="button" id="save-button" class="btn btn-primary">Save</button>
     </form>
+
+    <div>
+        <canvas id="employees-bar"></canvas>
+    </div>
 
 </body>
 </html>

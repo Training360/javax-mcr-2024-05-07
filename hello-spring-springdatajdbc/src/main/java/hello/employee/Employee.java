@@ -19,7 +19,10 @@ public class Employee {
     @Column("emp_name")
     private String name;
 
-    public Employee(String name) {
+    private long salary;
+
+    public Employee(String name, long salary) {
         this.name = name;
+        this.salary = salary;
     }
 }

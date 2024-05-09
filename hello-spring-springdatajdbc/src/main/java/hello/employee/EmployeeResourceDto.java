@@ -12,4 +12,6 @@ public class EmployeeResourceDto {
     private Long id;
 
     private String name;
+
+    private long salary;
 }

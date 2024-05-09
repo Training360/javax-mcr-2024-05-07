@@ -46,5 +46,38 @@ function downloadData() {
             for (let employee of data) {
                 table.innerHTML += `<tr><td>${employee.id}</td><td>${employee.name}</td></tr>`;
             }
+
+            showChart(data);
         })
+}
+
+function showChart(data) {
+    const ctx = document.getElementById("employees-bar");
+
+    const names = [];
+    const salaries = [];
+
+    for (let employee of data) {
+        names.push(employee.name);
+        salaries.push(employee.salary);
+    }
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: names,
+            datasets: [{
+                label: '# of Votes',
+                data: salaries,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
