@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample</title>
+</head>
+<body>
+
+    <p>Based on local</p>
+    <div th:text="${#numbers.formatDecimal(number, 0, 'DEFAULT', 0, 'DEFAULT')}">number...</div>
+
+    <div th:text="${#temporals.format(now, 'yyyy.MMMM.dd HH:mm')}">now...</div>
+
+</body>
+</html>
